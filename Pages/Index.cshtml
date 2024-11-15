@@ -1,0 +1,17 @@
+﻿@page
+@model IndexModel
+@inject LedController LedController
+
+<h1>LED Control</h1>
+<p>LED is currently: @(LedController.IsLedOn ? "On" : "Off")</p>
+<button id="toggleButton">Toggle LED</button>
+
+<script>
+    document.getElementById("toggleButton").addEventListener("click", function() {
+        fetch('/api/toggle', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                document.querySelector('p').innerText = 'LED is currently: ' + (data ? 'On' : 'Off');
+            });
+    });
+</script>
